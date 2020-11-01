@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build Lesson 2",
+            "type": "shell",
+            "command": "cd \"Lesson 2 - Autonomous Vehicles and Computer Vision/The OpenCV Library/OpenCV_exercises/Debug\" && cmake -DCMAKE_BUILD_TYPE=Debug .. && make"
+        },
+        {
+            "label": "build Lesson 3 - TTC Camera",
+            "type": "shell",
+            "command": "cd \"Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Camera/TTC_camera/Debug\" && cmake -DCMAKE_BUILD_TYPE=Debug .. && make"
+        },
+        {
+            "label": "build Lesson 3 - TTC Lidar",
+            "type": "shell",
+            "command": "cd \"Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Lidar/TTC_lidar/Debug\" && cmake -DCMAKE_BUILD_TYPE=Debug .. && make"
+        },
+        {
+            "label": "build Lesson 4 - Harris Corner Detection",
+            "type": "shell",
+            "command": "cd \"Lesson 4 - Tracking Image Features/Harris Corner Detection/cornerness_harris/Debug\" && cmake -DCMAKE_BUILD_TYPE=Debug .. && make"
+        }
+    ]
+}

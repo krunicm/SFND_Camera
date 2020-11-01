@@ -19,14 +19,14 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
     // compute distance ratios between all matched keypoints
     vector<double> distRatios; // stores the distance ratios for all keypoints between curr. and prev. frame
     for (auto it1 = kptMatches.begin(); it1 != kptMatches.end() - 1; ++it1)
-    { // outer keypoint loop
+    { // outer kpt. loop
 
         // get current keypoint and its matched partner in the prev. frame
         cv::KeyPoint kpOuterCurr = kptsCurr.at(it1->trainIdx);
         cv::KeyPoint kpOuterPrev = kptsPrev.at(it1->queryIdx);
 
         for (auto it2 = kptMatches.begin() + 1; it2 != kptMatches.end(); ++it2)
-        { // inner keypoint loop
+        { // inner kpt.-loop
 
             double minDist = 100.0; // min. required distance
 
@@ -54,13 +54,15 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
         return;
     }
 
-    // compute camera-based TTC from distance ratios
-    double meanDistRatio = std::accumulate(distRatios.begin(), distRatios.end(), 0.0) / distRatios.size();
+
+    // STUDENT TASK (replacement for meanDistRatio)
+    std::sort(distRatios.begin(), distRatios.end());
+    long medIndex = floor(distRatios.size() / 2.0);
+    double medDistRatio = distRatios.size() % 2 == 0 ? (distRatios[medIndex - 1] + distRatios[medIndex]) / 2.0 : distRatios[medIndex]; // compute median dist. ratio to remove outlier influence
 
     double dT = 1 / frameRate;
-    TTC = -dT / (1 - meanDistRatio);
-
-    // TODO: STUDENT TASK (replacement for meanDistRatio)
+    TTC = -dT / (1 - medDistRatio);
+    // EOF STUDENT TASK
 }
 
 int main()
@@ -70,12 +72,12 @@ int main()
     // so that you can focus on TTC computation based on a defined set of keypoints and matches. 
     // The task you need to solve in this example does not require you to look into the data structures.  
     vector<cv::KeyPoint> kptsSource, kptsRef;
-    readKeypoints("../dat/C23A5_KptsSource_AKAZE.dat", kptsSource); // readKeypoints("./dat/C23A5_KptsSource_SHI-BRISK.dat"
-    readKeypoints("../dat/C23A5_KptsRef_AKAZE.dat", kptsRef); // readKeypoints("./dat/C23A5_KptsRef_SHI-BRISK.dat"
+    readKeypoints("Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Camera/TTC_camera/dat/C23A5_KptsSource_AKAZE.dat", kptsSource); // readKeypoints("./dat/C23A5_KptsSource_SHI-BRISK.dat"
+    readKeypoints("Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Camera/TTC_camera/dat/C23A5_KptsRef_AKAZE.dat", kptsRef); // readKeypoints("./dat/C23A5_KptsRef_SHI-BRISK.dat"
 
     // step 2: read pre-recorded keypoint matches from file
     vector<cv::DMatch> matches;
-    readKptMatches("../dat/C23A5_KptMatches_AKAZE.dat", matches); // readKptMatches("./dat/C23A5_KptMatches_SHI-BRISK.dat", matches);
+    readKptMatches("Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Camera/TTC_camera/dat/C23A5_KptMatches_AKAZE.dat", matches); // readKptMatches("./dat/C23A5_KptMatches_SHI-BRISK.dat", matches);
     
     // step 3: compute the time-to-collision based on the pre-recorded data
     double ttc; 

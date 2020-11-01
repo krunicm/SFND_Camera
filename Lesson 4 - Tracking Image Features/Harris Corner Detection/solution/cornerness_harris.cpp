@@ -44,7 +44,7 @@ void cornernessHarris()
         {
             int response = (int)dst_norm.at<float>(j, i);
             if (response > minResponse)
-            { // only store points above a threshold
+            { // only stoach maximum. The resulting coordinates shall be stored in a list of keypoire points above a threshold
 
                 cv::KeyPoint newKeyPoint;
                 newKeyPoint.pt = cv::Point2f(i, j);
