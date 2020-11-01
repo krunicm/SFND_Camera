@@ -16,7 +16,7 @@ void loadImage3()
         // create file name
         ostringstream imgNumber;                   // #include <sstream>
         imgNumber << setfill('0') << setw(4) << i; // #include <iomanip>
-        string filename = "../images/img" + imgNumber.str() + ".jpg";
+        string filename = "./images/img" + imgNumber.str() + ".jpg";
 
         // load image and store it into a vector
         cv::Mat img;
@@ -31,8 +31,15 @@ void loadImage3()
     {
 
         // STUDENT TASK : Prevent image 7 from being displayed
-
-        // display image
+        cv::Mat img7 = imgList[3];
+        cv::Mat img = *it;
+        cv::Mat dst;
+        // cv::bitwise_xor(img7, (*it), dst);
+        
+        // cv::compare(img7, img, dst, cv::CMP_NE);
+        // int nz = cv::countNonZero(dst);
+        // if (cv::countNonZero(dst) > 0)
+        // if (!nz)
         cv::imshow(windowName, *it);
         cv::waitKey(0); // wait for keyboard input before continuing
     }
